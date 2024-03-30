@@ -1,5 +1,8 @@
 # Don't Starve Together Crock Pot Recipe Guide
 
+Original Project: [GitHub Repository](https://github.com/bostwiek/dontstarvetogether-crockpot)
+Author: [bostwiek](https://bostwiek.com/)
+
 Live version here: https://dontstarvetogether-crockpot.netlify.app/
 
 Having trouble remember all the recipes in Don't Starve Together? Well so does everyone else, so I built this to ease the pain!
