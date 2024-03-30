@@ -29,12 +29,14 @@ class Main extends React.Component {
 		super();
 		this.state = {
 			search: '',
+			searchByIngredients: '',
 			sortBy: 'alpha-desc',
 			containsMeat: 'either',
 			warlyRecipes: 'either',
 			showOverlay: true
 		}
 		this.searchUpdate = this.searchUpdate.bind(this);
+		this.searchIngredientsUpdate = this.searchIngredientsUpdate.bind(this);
 		this.sortByUpdate = this.sortByUpdate.bind(this);
 		this.sortContainsMeat = this.sortContainsMeat.bind(this);
 		this.sortWarlyRecipes = this.sortWarlyRecipes.bind(this);
@@ -48,10 +50,16 @@ class Main extends React.Component {
 	//													//
 	//////////////////////////////
 
-	// Triggers when SEARCH input value changes
+	// Triggers when SEARCH-RECIPE input value changes
 	searchUpdate = () => {
 		let inputValue = document.getElementById('search-recipe').value;
 		this.setState({search: inputValue});
+	}
+
+	// Triggers when SEARCH-RECIPE-BY-INGREDIENTS input value changes
+	searchIngredientsUpdate = () => {
+		let inputValue = document.getElementById('search-recipe-by-ingredients').value;
+		this.setState({searchByIngredients: inputValue});
 	}
 
 	// Triggers when SORT BY select value changes
@@ -200,8 +208,21 @@ class Main extends React.Component {
 								maxLength="99"
 								id="search-recipe"
 								className="form-control"
-								placeholder="Search..."
+								placeholder="Search by name..."
 								onChange={this.searchUpdate}
+							/>
+						</div>
+					</div>  
+					
+					<div className="search-container">
+						<div className="input-group">
+							<input
+								type="text"
+								maxLength="99"
+								id="search-recipe-by-ingredients"
+								className="form-control"
+								placeholder="Search by ingredients..."
+								onChange={this.searchIngredientsUpdate}
 							/>
 						</div>
 					</div>
@@ -289,7 +310,19 @@ class Main extends React.Component {
 										/>
 									);
 									
-									// checks SEARCH input first to filter out items
+									// check SEARCH-RECIPE-BY-INGREDIENTS input first to filter out items
+									let hasIngredient = false
+									for (const recipe of food[key].recipes) {
+										for (const ingredient of recipe) {
+											if (ingredient.includes(this.state.searchByIngredients.toLowerCase()))
+												hasIngredient = true
+										}
+									}
+									// food item does not contain the ingredient
+									if (!hasIngredient)
+										return false
+									
+									// checks SEARCH-RECIPE input first to filter out items
 									if(food[key].name.toLowerCase().includes(this.state.search.toLowerCase())){
 
 										// we make it here if we have at LEAST one result
